@@ -9,14 +9,16 @@ public class Transaction {
     private String usernameOrigin;
     private String usernameDestiny;
     private Integer value;
+    private String note;
     private Date date;
 
-    public Transaction(String id, String usernameOrigin, String usernameDestiny, Integer value, Date date) {
+    public Transaction(String id, String usernameOrigin, String usernameDestiny, Integer value, String note, Date date) {
 
         this.setId(id);
         this.setUsernameOrigin(usernameOrigin);
         this.setUsernameDestiny(usernameDestiny);
         this.setValue(value);
+        this.setNote(note);
         this.setDate(date);
 
     }
@@ -60,5 +62,13 @@ public class Transaction {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }

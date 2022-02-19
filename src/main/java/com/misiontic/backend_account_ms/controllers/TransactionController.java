@@ -4,6 +4,7 @@ import com.misiontic.backend_account_ms.exceptions.AccountNotFoundException;
 
 import com.misiontic.backend_account_ms.exceptions.InsufficientBalanceException;
 
+import com.misiontic.backend_account_ms.exceptions.TransactionNotFoundException;
 import com.misiontic.backend_account_ms.models.Account;
 
 import com.misiontic.backend_account_ms.models.Transaction;
@@ -98,7 +99,27 @@ public class TransactionController {
         List<Transaction> transactions = Stream.concat(transactionsOrigin.stream(), transactionsDestinity.stream()).collect(Collectors.toList());
 
         return transactions;
-
     }
 
+    @PutMapping("/transactions/update")
+    Transaction updateTransaction(@RequestBody Transaction transaction) {
+        // body: id, note
+        Transaction transaction_update = transactionRepository.findById(transaction.getId()).orElse(null);
+        if(transaction_update == null)
+            throw new TransactionNotFoundException("Codigo de transaccion no encontrado");
+        transaction_update.setNote(transaction.getNote());
+        return transactionRepository.save(transaction_update);
+    }
+    @DeleteMapping("/transactions/delete/{transactionId}")
+    Transaction deleteTransaction(@PathVariable String transactionId){
+        Transaction transaction = transactionRepository.findById(transactionId).orElse(null);
+        if(transaction == null)
+            throw new TransactionNotFoundException("Codigo de transaccion no encontrado");
+        /** Borrado por el objeto*/
+        // transactionRepository.delete(transaction);
+
+        /** Borrado por el id*/
+        transactionRepository.deleteById(transactionId);
+        return transaction;
+    }
 }

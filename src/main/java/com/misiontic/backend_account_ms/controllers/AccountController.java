@@ -22,6 +22,11 @@ public class AccountController {
 
     /** Microservicios */
 
+    @GetMapping("/")
+    String messageRoot(){
+        return "Bienvenido a AccountMS";
+    }
+
     /** Porque el repositorio usa un map en la interfaz debemos usar un Mapping en el microservicio*/
     /** Se le pasa como parametro el endpoint y llama el metodo*/
     @GetMapping("/accounts/{username}")
